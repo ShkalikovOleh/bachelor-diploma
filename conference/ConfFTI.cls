@@ -66,7 +66,8 @@
 \RequirePackage{textcase}
 %=====================================================================================================
 \RequirePackage[protrusion=true, expansion, tracking=true, kerning=true]{microtype}
-\RequirePackage[]{flushend}
+% \RequirePackage{flushend} % Does not work for me
+\RequirePackage{balance}
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
 \RequirePackage{amssymb}
