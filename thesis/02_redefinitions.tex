@@ -1,0 +1,23 @@
+%%% У даному файлі визначайте всі необхідні вам нові команди TeX
+%%% або робіть перевизначення існуючих
+
+% Перевизначення символу порожньої множини та знаків "більше-дорівнює", "менше-дорівнює" на прийняті у нас
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+\let\geq\geqslant
+\let\leq\leqslant
+
+% \newcommand*{\compinv}[1]{\ensuremath {#1}^{\left\langle -1 \right\rangle}}
+
+\DeclareMathOperator{\ce}{CE}
+\DeclareMathOperator{\wce}{WCE}
+\DeclareMathOperator{\fl}{FL}
+\DeclareMathOperator{\ind}{1}
+\DeclareMathOperator{\iou}{IoU}
+\DeclareMathOperator{\acc}{Accuracy}
+\DeclareMathOperator{\usacc}{UA}
+\DeclareMathOperator{\pracc}{PA}
+
+\DeclareMathOperator{\R}{\mathbb{R}}
+\DeclareMathOperator{\N}{\mathbb{N}}
+\DeclareMathOperator{\E}{\mathbb{E}}
