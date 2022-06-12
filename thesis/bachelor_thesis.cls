@@ -334,6 +334,8 @@
 }
 \makeatother
 
+\setcounter{tocdepth}{1}
+
 % задаємо відстань між точками
 \renewcommand{\cftchapdotsep}{1}
 \renewcommand{\cftsecdotsep}{1}
