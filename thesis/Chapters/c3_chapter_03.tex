@@ -191,7 +191,7 @@ $2 \cdot 10^{-4}$. Розмір батчу дорівнював $64$.
 істотно впливає на якість семантичної сегментації супутникових
 знімків. Тож спробуємо доповнити нашу вибірку, таким чином збалансувавши її.
 Для цього використаємо розроблений нами процес аугментації
-за допогомою генеративно-змагальних мереж.
+за допомогою генеративно-змагальних мереж.
 
 \subsection{Генерація доповнених вибірок}
 
@@ -199,8 +199,8 @@ $2 \cdot 10^{-4}$. Розмір батчу дорівнював $64$.
 (будемо позначати її Pix2Pix + HD),
 що використовує ті покращення, що
 описані у розділі \ref{chap:gans}, а саме:
-декілька дискримінаторів та функції помилки узгодженності
-ознак~\eqref{eq:fm_loss} та узгодженності внутрішніх представлень
+декілька дискримінаторів та функції помилки узгодженості
+ознак~\eqref{eq:fm_loss} та узгодженості внутрішніх представлень
 навченої мережі класифікації~\eqref{eq:perceptual_loss}.
 
 Навчання відбувалося протягом 500 епох з використання
@@ -211,23 +211,64 @@ $2 \cdot 10^{-4}$. У якості параметрів експоненційн
 дорівнював $8$, бо великі значення можуть приводити до
 зниження якості згенерованих зображень.
 
-Приклади справжніх зображень та тих, які генерують навченні
+Приклади справжніх зображень (лише червоний, зелений та синій канал)
+та тих, які генерують навченні
 генеративно-змагальні мережі наведені на рисунках
-\ref{fig:real_examples}, \ref{fig:gen_pix2pix_examples}.
+\ref{fig:real_examples} -- \ref{fig:gen_pix2pix_hd_examples}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{real_examples_4.png}
-    \caption{Архітектура Pix2Pix у застосуванні до супутникових знімків}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{real_0.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{real_1.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{real_2.png}
+    \end{subfigure}
+    \caption{Приклади справжніх супутникових знімків}
     \label{fig:real_examples}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{gen_examples_4.png}
-    \caption{Архітектура Pix2Pix у застосуванні до супутникових знімків}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{gen_pix2pix_0.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{gen_pix2pix_1.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{gen_pix2pix_2.png}
+    \end{subfigure}
+    \caption{Приклади згенерованих Pix2Pix зображень}
     \label{fig:gen_pix2pix_examples}
 \end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{gen_pix2pix_hd_0.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{gen_pix2pix_hd_1.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[scale=0.5]{gen_pix2pix_hd_2.png}
+    \end{subfigure}
+    \caption{Приклади згенерованих Pix2Pix + HD зображень}
+    \label{fig:gen_pix2pix_hd_examples}
+\end{figure}
+
+Як ми бачимо, на згенерованих прикладах присутня
+деяка розмитість та інші незначні артефакти, проти
+вони виглядають наближеними до справжніх. Причому візуально
+знімки згенеровані модифікацією Pix2Pix виглядають краще.
+До того ж,
+як ми вже зазначали, кінцевою нашою метою є саме покращення
+якості сегментації, а не генерація ідеальних зображень.
+
 
 Наступним етапом було застосування алгоритму \ref{alg:mask_gen} генерації
 штучних масок. Як можна побачити на рисунку \ref{fig:real_examples}
@@ -276,13 +317,17 @@ $2 \cdot 10^{-4}$. У якості параметрів експоненційн
 епох, яка була зменшена до $300$ через те, що ми працюємо з
 більшою вибіркою.
 
+Результати у вигляді глобальних метрик наведені у таблиці \ref{tab:segm_result_aug_global}.
+Найкращі показники має
+
 \newcolumntype{S}{>{\centering\arraybackslash}m{1.3cm}}
 \newcolumntype{M}{>{\centering\arraybackslash}p{2.2cm}}
 
 \begin{table}[!ht]
     \centering
-    \caption{Глобальні метрики точності сегментації
-        для реальної вибірки}
+    \caption{Порівняння глобальних метрик
+        точності сегментації
+        для доповненої вибірки та вихідної вибірок}
     \begin{tabular}{|c|S|C|C|}
         \hline
         \multirow{2}{*}{Метрика} & \multirow{2}{1.3cm}{Вихідна вибірка} & \multicolumn{2}{M|}{Аугментована вибірка}                \\
@@ -295,10 +340,14 @@ $2 \cdot 10^{-4}$. У якості параметрів експоненційн
     \label{tab:segm_result_aug_global}
 \end{table}
 
+Якщо ж казати, про метрики точності по класам, то вони наведені у таблиці
+\ref{tab:segm_result_augm_per_classes}.
+
 \begin{table}[!ht]
     \centering
-    \caption{Метрики точності сегментації за класами
-        для реальної вибірки}
+    \caption{Порівняння метрик
+        точності сегментації за кожним класом
+        для доповненої вибірки та вихідної вибірок}
     \begin{tabular}{|K|S|C|C|S|C|C|}
         \hline
         \multirow{3}{*}{Назва класу}         & \multicolumn{3}{c|}{PA}                   & \multicolumn{3}{c|}{UA}                                                              \\
@@ -330,6 +379,8 @@ $2 \cdot 10^{-4}$. У якості параметрів експоненційн
     \end{tabular}
     \label{tab:segm_result_augm_per_classes}
 \end{table}
+
+Отримані результати свідчать про те, що
 
 \chapconclude{\ref{chap:practice}}
 Перемога
