@@ -1,0 +1,63 @@
+\documentclass{bachelor_thesis}
+
+% Додаткові пакети
+\input{01_packages}
+
+% Додаткові визначення та перевизначення команд
+\input{02_redefinitions}
+
+% Відомості про автора роботи
+\input{03_data}
+
+\graphicspath{{../assets/}}
+
+% Починаємо верстку документа
+\begin{document}
+
+\pagestyle{plain}
+\setfontsize{14}
+
+% Створюємо титульну сторінку
+\input{a00_title}
+
+% Створюємо завдання
+\input{a01_specification}
+
+% Створюємо анотації
+%\setcounter{page}{4}
+\input{Chapters/a1_abstract}
+
+% Створюємо зміст
+%\pagenumbering{gobble}
+\tableofcontents
+\cleardoublepage
+%\pagenumbering{arabic}
+%\setcounter{page}{8}
+
+% Створюємо перелік умовних позначень, скорочень і термінів
+\shortings
+\input{Chapters/a2_shortings}
+
+% Створюємо вступ
+\intro
+\input{Chapters/a3_introduction}
+
+% Додаємо глави
+\input{Chapters/c1_chapter_01}
+\input{Chapters/c2_chapter_02}
+\input{Chapters/c3_chapter_03}
+
+% Створюємо висновки
+\conclusions
+\input{Chapters/w1_conclusions}
+
+% Додаємо бібліографію
+
+% \bibliographystyle{ugost2008}
+\bibliographystyle{utf8gost780u}
+\renewcommand\bibname{Перелік посилань}
+\pagebreak
+\addcontentsline{toc}{chapter}{Перелік посилань}
+\bibliography{thesis}
+
+\end{document}
